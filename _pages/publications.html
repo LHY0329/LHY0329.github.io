@@ -11,6 +11,8 @@ author_profile: true
 
 {% include base_path %}
 
+{% assign publication_number = 0 %}
+
 <!-- New style rendering if publication categories are defined -->
 {% if site.publication_category %}
   {% for category in site.publication_category  %}
@@ -23,14 +25,21 @@ author_profile: true
         <h2>{{ category[1].title }}</h2><hr />
         {% assign title_shown = true %}
       {% endunless %}
-      {% include archive-single.html %}
+      {% assign publication_number = publication_number | plus: 1 %}
+      {% include archive-single.html index=publication_number %}
     {% endfor %}
   {% endfor %}
 {% else %}
   {% for post in site.publications reversed %}
-    {% include archive-single.html %}
+    {% assign publication_number = publication_number | plus: 1 %}
+    {% include archive-single.html index=publication_number %}
   {% endfor %}
 {% endif %}
 
-
-
+<style>
+  .publication-number {
+    margin-right: 0.35rem;
+    color: #666;
+    font-weight: 600;
+  }
+</style>
