@@ -1,0 +1,83 @@
+---
+layout: archive
+title: "Photography"
+permalink: /photography/
+author_profile: true
+---
+
+<p class="photography-intro">A chronological collection of photographs, with the newest images shown first.</p>
+
+{% assign photos = site.static_files | where_exp: "photo", "photo.path contains '/academic_picture/'" | sort: "name" | reverse %}
+{% assign photo_count = 0 %}
+
+<div class="photo-gallery">
+  {% for photo in photos %}
+    {% assign extension = photo.extname | downcase %}
+    {% if extension == '.jpg' or extension == '.jpeg' or extension == '.png' or extension == '.webp' or extension == '.gif' %}
+      {% assign photo_count = photo_count | plus: 1 %}
+      {% assign capture_date = photo.name | slice: 0, 10 %}
+      <figure class="photo-card">
+        <a href="{{ photo.path | relative_url }}" target="_blank" rel="noopener">
+          <img src="{{ photo.path | relative_url }}"
+               alt="Photograph taken on {{ capture_date }}"
+               loading="lazy"
+               decoding="async">
+        </a>
+        <figcaption>
+          <time datetime="{{ capture_date }}">{{ capture_date }}</time>
+        </figcaption>
+      </figure>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% if photo_count == 0 %}
+  <p>No photographs have been added yet.</p>
+{% endif %}
+
+<style>
+  .photography-intro {
+    margin-bottom: 1.5rem;
+    color: var(--global-text-color-light, #666);
+  }
+
+  .photo-gallery {
+    column-width: 18rem;
+    column-gap: 1.25rem;
+  }
+
+  .photo-card {
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 1.25rem;
+    overflow: hidden;
+    break-inside: avoid;
+    border-radius: 0.45rem;
+    background: var(--global-bg-color, #fff);
+    box-shadow: 0 0.2rem 0.9rem rgba(0, 0, 0, 0.12);
+  }
+
+  .photo-card a {
+    display: block;
+    line-height: 0;
+  }
+
+  .photo-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .photo-card a:hover img {
+    opacity: 0.94;
+    transform: scale(1.015);
+  }
+
+  .photo-card figcaption {
+    padding: 0.65rem 0.8rem;
+    font-size: 0.82rem;
+    color: var(--global-text-color-light, #666);
+  }
+</style>
