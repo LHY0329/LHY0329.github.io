@@ -5,7 +5,7 @@ permalink: /photography/
 author_profile: true
 ---
 
-<p class="photography-intro">A chronological collection of photographs, with the newest images shown first.</p>
+<p class="photography-intro">I will share some interesting photos here.</p>
 
 {% assign photos = site.static_files | where_exp: "photo", "photo.path contains '/academic_picture/'" | sort: "name" | reverse %}
 {% assign photo_count = 0 %}
